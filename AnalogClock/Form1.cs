@@ -12,64 +12,44 @@ namespace AnalogClock
 {
     public partial class MainForm : Form
     {
-        int SecHand = 140;
-        int minHand = 110;
-        int centerWidth;
-        int centerHeight;
-        int[] handCoordMin;
+        
+         
         Hands hands;
+        ClockFace clockFace;
+        
 
         public MainForm()
         {
-            centerWidth = Size.Width / 2;
-            centerHeight = Size.Height / 2;
+            
             InitializeComponent();
             SetStyle(ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-            ClockFaceClass clockFace = new ClockFaceClass(Center());
-            handCoordMin = HandCoordinates(DateTime.Now.Second, SecHand);
-            hands = new Hands(Center(), new Point(handCoordMin[0], handCoordMin[1]));
+            clockFace = new ClockFace();
+            hands = new Hands();
+            Paint += MainForm_Paint;
+            
 
         }
 
         private void Tick(object sender, EventArgs e)
         {
-            Graphics g = CreateGraphics();
-            g.DrawEllipse(new Pen(Color.Black),Size.Width,Size.Height,Size.Width,Size.Height);
-
-            hands.Initialize(g);
-            //g.DrawLine(new Pen(Color.Black),Center(), new Point(handCoordMin[0],handCoordMin[1]));
+           // Graphics g = CreateGraphics();
+            
+            
+            
         }
 
-        public Point Center()
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            int heightCenter = Size.Height / 2;
-            int widthCenter = Size.Width / 2;
-            Point center = new Point(heightCenter, widthCenter);
-            return center;
-        }
+            clockFace.Draw(e.Graphics, e.ClipRectangle);
+            hands.Draw(e.Graphics, e.ClipRectangle);
 
-        public int[] HandCoordinates(int timeNow, int minSecHand)
-        {
-            int[] handCoord = new int[2];
-            timeNow *= 6; //each minute and second makes a 6 degree movement
-
-            if (timeNow >= 0 && timeNow <= 180)
-            {
-                handCoord[0] = centerWidth + (int)(minSecHand * Math.Sin(Math.PI * timeNow / 180));
-                handCoord[1] = centerHeight - (int)(minSecHand * Math.Cos(Math.PI * timeNow / 180));
-            }
-            else
-            {
-                handCoord[0] = centerWidth - (int)(minSecHand * Math.Sin(Math.PI * timeNow / 180));
-                handCoord[1] = centerHeight - (int)(minSecHand * Math.Cos(Math.PI * timeNow / 180));
-            }
-
-            return handCoord;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
+        
     }
 }
