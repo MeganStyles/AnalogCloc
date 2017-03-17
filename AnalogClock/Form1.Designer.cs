@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this._TIMER = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // _TIMER
+            // timer1
             // 
-            this._TIMER.Enabled = true;
-            this._TIMER.Interval = 1000;
-            this._TIMER.Tick += new System.EventHandler(this.Tick);
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // MainForm
             // 
@@ -47,7 +46,7 @@
             this.ClientSize = new System.Drawing.Size(536, 430);
             this.Cursor = System.Windows.Forms.Cursors.No;
             this.Name = "MainForm";
-            this.Text = "AnalogClock";
+            this.Text = "Megan\'s Awesome Time Machine";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
@@ -55,7 +54,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer _TIMER;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
